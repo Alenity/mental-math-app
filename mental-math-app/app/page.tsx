@@ -6,23 +6,18 @@ export default function Home() {
     <main className="w-screen h-screen bg-main-bg-color flex flex-col p-5">
       <div className="w-full h-full flex justify-between flex-1">
         <div>
-          <p className="font-mono">Sail Math</p>
+          <p className="font-mono text-hover-color">Sail Math</p>
         </div>
         <div>
-          <p className="font-mono">Account Stuff</p>
+          <p className="font-mono text-text-color">Account Stuff</p>
         </div>
       </div>
       <div className="w-full h-full flex justify-center items-center flex-4">
-      <div className="w-2/3  h-2/3 flex flex-col justify-around items-center p-5">
-          <QBoard/>
-          <div className="w-full border-secondary-bg-color border-8 rounded-lg h-20">
-            <input id="Answer" className="w-full h-full bg-main-bg-color text-ellipsis text-4xl font-mono"></input>
-          </div>
-        </div>
+        <QBoard/>
       </div>
       <div className="w-full h-full flex justify-between flex-1">
         <div>
-          <p className="font-mono">v0.0.1</p>
+          <p className="font-mono text-text-color">v0.0.1</p>
         </div>
       </div>
     </main>

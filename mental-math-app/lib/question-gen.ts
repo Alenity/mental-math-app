@@ -1,21 +1,18 @@
 export function QGen({props} : {props: Props}) {
-    let question = "";
-    let answer = 0;
+    let x, y;
+    x = (Math.floor(Math.random()*Math.pow(10, props.digit_count)));
+    y = (Math.floor(Math.random()*Math.pow(10, props.digit_count)));
+
     switch (props.operation) {
         case Operator.Add:
-            question = (Math.floor(Math.random()*Math.pow(10, props.digit_count))) + " + " + (Math.floor(Math.random()*Math.pow(10, props.digit_count)));
-            break;
+            return [(x + " + " + y), (x + y)];
         case Operator.Subtract: 
-            question = (Math.floor(Math.random()*Math.pow(10, props.digit_count))) + " - " + (Math.floor(Math.random()*Math.pow(10, props.digit_count)));
-            break;
+            return [(x + " - " + y), (x - y)];
         case Operator.Divide:
-            question = (Math.floor(Math.random()*Math.pow(10, props.digit_count))) + " / " + (Math.floor(Math.random()*Math.pow(10, props.digit_count)));
-            break;
+            return [(x + " / " + y), (x / y)];
         case Operator.Multiply:
-            question = (Math.floor(Math.random()*Math.pow(10, props.digit_count))) + " x " + (Math.floor(Math.random()*Math.pow(10, props.digit_count)));
-            break;
+            return [(x + " x " + y), (x * y)]
     }
-    return [question, answer];
 }
 
 export type Props = {
