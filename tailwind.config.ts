@@ -11,6 +11,9 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      'mono': ['var(--font-mono)'],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -25,9 +28,6 @@ const config = {
         'text-color': '#4d4d4d',
         'hover-color': '#cccccc',
         'accent-color': '#007acc',
-      },
-      fontFamily: {
-        mono: ['Jetbrains Mono'],
       },
       keyframes: {
         "accordion-down": {
