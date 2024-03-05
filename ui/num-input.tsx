@@ -10,7 +10,7 @@ export default function NumInput({children, label, callBack, childID}: {children
             <label className={`flex-1 text-center flex justify-between px-3 text-hover-color ${jetbrains.className}`}>
                 <button className="px-2 bg-main-bg-color border-transparent rounded-md border" onClick={() => callBack(false, childID)}>-</button>
                 {children}
-                <button className="px-2 bg-main-bg-color border-transparent rounded-md border" onClick={() => callBack(true, childID)}>+</button>
+                <button className="px-2 bg-main-bg-color border-transparent mr-5 rounded-md border" onClick={() => callBack(true, childID)}>+</button>
                 {label}
             </label>
         </div>

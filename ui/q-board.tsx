@@ -6,9 +6,17 @@ import ControlPanel from "./control-panel";
 
 export default function QBoard() {
     const [params, setParams] = useState<ParamProps>(null!);
-
+    const [cpHidden, setCPHidden] = useState<boolean>(false);
     const exchange = (params: SetStateAction<ParamProps>) => {
         setParams(params);
+    }
+
+    const testStart = () => {
+        setCPHidden(true);
+    }
+
+    const testEnd = () => {
+        setCPHidden(false);
     }
 
     return (

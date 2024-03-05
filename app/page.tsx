@@ -18,7 +18,7 @@ export default function Home() {
       </div>
       <div className="w-full h-full flex justify-between flex-1">
         <div>
-          <p className={`${jetbrains.className} text-text-color`}>v0.0.1</p>
+          <p className={`${jetbrains.className} text-text-color`}>v1.0.0</p>
         </div>
       </div>
     </main>
