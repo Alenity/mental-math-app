@@ -7,7 +7,7 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
     y = (Math.floor(Math.random()*Math.pow(10, params?.digit_count)));
     
 
-    function noZero(y: number, count: number): number {
+    function noZero(y: number): number {
         y = (Math.floor(Math.random()*Math.pow(10, params?.digit_count)));
         if (y === 0) {
             y = 1;
@@ -24,7 +24,7 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
                 case 2:
                     return [(x + " - " + y), (x - y)];
                 case 3:
-                    y = noZero(y, 0);
+                    y = noZero(y);
                     return [(x + " / " + y), parseFloat((x / y).toPrecision(2))];
                 case 4:
                     return [(x + " x " + y), (x * y)];
@@ -36,7 +36,8 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
         case Operator.Subtract: 
             return [(x + " - " + y), (x - y)];
         case Operator.Divide:
-            return [(x + " / " + y), (x / y)];
+            y = noZero(y);
+            return [(x + " / " + y), parseFloat((x / y).toPrecision(2))];
         case Operator.Multiply:
             return [(x + " x " + y), (x * y)];
         default: 

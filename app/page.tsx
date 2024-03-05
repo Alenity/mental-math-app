@@ -1,5 +1,5 @@
-import QBoard from '@/ui/q-board';
 import { jetbrains } from './fonts';
+import QBoard from '@/ui/q-board';
 
 export default function Home() {
  
