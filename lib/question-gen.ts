@@ -25,7 +25,7 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
                     return [(x + " - " + y), (x - y)];
                 case 3:
                     y = noZero(y);
-                    return [(x + " / " + y), parseFloat((x / y).toPrecision(2))];
+                    return [(x + " / " + y), parseFloat((x / y).toPrecision(3))];
                 case 4:
                     return [(x + " x " + y), (x * y)];
                 default:
@@ -37,7 +37,7 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
             return [(x + " - " + y), (x - y)];
         case Operator.Divide:
             y = noZero(y);
-            return [(x + " / " + y), parseFloat((x / y).toPrecision(2))];
+            return [(x + " / " + y), parseFloat((x / y).toPrecision(3))];
         case Operator.Multiply:
             return [(x + " x " + y), (x * y)];
         default: 

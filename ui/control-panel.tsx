@@ -6,7 +6,7 @@ import { jetbrains } from "@/app/fonts";
 import { Operator, ParamProps, TimeMode } from "@/lib/custom-types";
 import NumInput from "./num-input";
 
-export default function ControlPanel({exchange}: {exchange: any}) {
+export default function ControlPanel({exchange, hidden}: {exchange: any, hidden: boolean}) {
     let defaultParams: ParamProps = {operation: Operator.All, digit_count: 1, time_mode: TimeMode.Timed, time_mode_val: 30};
     const [params, setParams] = useState<ParamProps>(defaultParams);
     
@@ -53,7 +53,7 @@ export default function ControlPanel({exchange}: {exchange: any}) {
 
 
     return (
-        <div className="w-2/3 bg-secondary-bg-color p-3 flex justify-evenly border-2 rounded-lg border-secondary-bg-color">
+        <div className={`w-2/3 bg-secondary-bg-color p-3 flex justify-evenly border-2 rounded-lg border-secondary-bg-color ${hidden ? "hidden" : ""}`}>
             <div className="flex justify-around w-full flex-3">
                 <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
                     all <input type="radio" onChange={e => convert(e)} value={Operator.All} defaultChecked={true} name="ops" id="ops1" className="hidden"></input>

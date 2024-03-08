@@ -2,7 +2,7 @@ import { jetbrains } from './fonts';
 import QBoard from '@/ui/q-board';
 
 export default function Home() {
- 
+  
   return (
     <main className="w-screen h-screen bg-main-bg-color flex flex-col p-5">
       <div className="w-full h-full flex justify-between flex-1">
@@ -17,8 +17,15 @@ export default function Home() {
         <QBoard/>
       </div>
       <div className="w-full h-full flex justify-between flex-1">
-        <div>
-          <p className={`${jetbrains.className} text-text-color`}>v1.0.0</p>
+        <div className="flex items-end">
+          <p className={`${jetbrains.className} text-text-color`}>v1.1.0</p>
+        </div>
+        <div className="flex flex-col items-center space-y-4">
+        
+          {/*<p className={`${jetbrains.className} text-text-color`}>Press <kbd className="bg-text-color rounded-sm text-main-bg-color px-2 py-1">Ctrl</kbd> + <kbd className="bg-text-color rounded-sm text-main-bg-color px-2 py-1">,</kbd> for settings</p> */}
+        </div>
+        <div className="flex items-end">
+          <p className={`${jetbrains.className} text-text-color`}>Social Stuff</p>
         </div>
       </div>
     </main>
