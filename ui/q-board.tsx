@@ -1,16 +1,26 @@
 'use client';
 import QDisplay from "./q-display";
-import { ParamProps } from "@/lib/custom-types";
+import { DataProps, ParamProps } from "@/lib/custom-types";
+import { useRouter } from "next/navigation";
 import { SetStateAction, useState, useCallback } from "react";
 import ControlPanel from "./control-panel";
 
 export default function QBoard() {
+    const router = useRouter();
     const [params, setParams] = useState<ParamProps>(null!);
+    const [data, setData] = useState<DataProps>(null!);
     const [onGoing, setOnGoing] = useState<boolean>(false);    
+    let startData : DataProps = {totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], streak: 0};
 
     const exchange = useCallback((params: SetStateAction<ParamProps>) => {
         setParams(params);
     }, []);
+
+    const report = useCallback((data: SetStateAction<DataProps>) => {
+        setData(startData);
+        // router.push('/results');
+        setOnGoing(false);
+    }, [router])
 
     const shortCuts = useCallback((event: any) => {
         switch (event.key) {
@@ -30,14 +40,12 @@ export default function QBoard() {
         document.getElementById("mainInput")?.focus();
     }, []);
 
-    const testEnd = useCallback(() => {
-        setOnGoing(false);
-    }, []);
+   
 
     return (
         <div autoFocus={true} onKeyDown={shortCuts} className="w-full h-full flex flex-col items-center justify-around">
             <ControlPanel exchange={exchange} hidden={onGoing}/>
-            <QDisplay params={params} onGoing={onGoing} functions={[testStart, testEnd, shortCuts]}/>
+            <QDisplay params={params} onGoing={onGoing} report={report} functions={[testStart, shortCuts]}/>
         </div>
     );
 }

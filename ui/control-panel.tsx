@@ -53,21 +53,21 @@ export default function ControlPanel({exchange, hidden}: {exchange: any, hidden:
 
 
     return (
-        <div className={`w-2/3 bg-secondary-bg-color p-3 flex justify-evenly border-2 rounded-lg border-secondary-bg-color ${hidden ? "hidden" : ""}`}>
+        <div className={`sm:w-full md:w-full lg:w-2/3 bg-secondary-bg-color p-3 flex justify-evenly border-2 rounded-lg border-secondary-bg-color ${hidden ? "hidden" : ""}`}>
             <div className="flex justify-around w-full flex-3">
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     all <input type="radio" onChange={e => convert(e)} value={Operator.All} defaultChecked={true} name="ops" id="ops1" className="hidden"></input>
                 </label>
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     + <input type="radio" onChange={e => convert(e)} value={Operator.Add} name="ops" id="ops1" className="hidden"></input>
                 </label> 
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     - <input type="radio" onChange={e => convert(e)} value={Operator.Subtract} name="ops" id="ops2" className="hidden"></input>
                 </label>
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     x <input type="radio" onChange={e => convert(e)} value={Operator.Multiply} name="ops" id="ops3" className="hidden"></input>
                 </label>
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     / <input type="radio" onChange={e => convert(e)} value={Operator.Divide} name="ops" id="ops4" className="hidden"></input>
                 </label>
             </div>
@@ -77,13 +77,13 @@ export default function ControlPanel({exchange, hidden}: {exchange: any, hidden:
             </NumInput>
             <Divider props={false}/>
             <div className="flex justify-around w-full flex-3">
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     inf <input type="radio" onChange={e => convert(e)} value={TimeMode.Inf} name="timeMode" id="timeMode1" className="hidden"></input>
                 </label>
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     timed <input type="radio" onChange={e => convert(e)} value={TimeMode.Timed} name="timeMode" id="timeMode2" defaultChecked={true} className="hidden"></input>
                 </label> 
-                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color ${jetbrains.className}`}>
+                <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     race <input type="radio" onChange={e => convert(e)} value={TimeMode.Race} name="timeMode" id="timeMode3" className="hidden"></input>
                 </label>
             </div>
