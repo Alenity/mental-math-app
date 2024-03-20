@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react"
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { jetbrains } from "./fonts";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "SailMath",
@@ -19,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Analytics/>
-      <body className={jetbrains.className}>
+      <body className={`${jetbrains.className}`}>
         <main className="w-screen h-screen bg-main-bg-color flex flex-col p-5">
           <div className="w-full h-full flex justify-between flex-1">
             <div>

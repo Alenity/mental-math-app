@@ -2,33 +2,34 @@
 import QDisplay from "./q-display";
 import { DataProps, ParamProps } from "@/lib/custom-types";
 import { useRouter } from "next/navigation";
-import { SetStateAction, useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import ControlPanel from "./control-panel";
+import Stats from "./stats";
 
 export default function QBoard() {
     const router = useRouter();
     const [params, setParams] = useState<ParamProps>(null!);
-    const [data, setData] = useState<DataProps>(null!);
+    const startData : DataProps = useMemo(() => ({totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], streak: 0}), [params?.time_mode_val]);
+    const [data, setData] = useState<DataProps>(startData);
     const [onGoing, setOnGoing] = useState<boolean>(false);    
-    let startData : DataProps = {totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], streak: 0};
 
-    const exchange = useCallback((params: SetStateAction<ParamProps>) => {
-        setParams(params);
+    const update = useCallback(({params, correct} : {params?: ParamProps, correct?: boolean}) => {
+        params !== undefined ? setParams(params) : null;
+        if (correct !== undefined) {
+            correct ? setData(data => ({...data, questionsCorrect: ++data.questionsCorrect, streak: ++data.streak})) : setData(data => ({...data, streak: 0}));
+        }
     }, []);
 
-    const report = useCallback((data: SetStateAction<DataProps>) => {
-        setData(startData);
+    const report = useCallback((report: DataProps) => {
+        setData(data => ({...data, report}))
         // router.push('/results');
         setOnGoing(false);
-    }, [router])
+    }, [])
 
     const shortCuts = useCallback((event: any) => {
         switch (event.key) {
             case "Escape":
                 onGoing ? setOnGoing(false) : null;
-                break;
-            case "Enter": 
-                
                 break;
             default: 
                 break;
@@ -36,16 +37,15 @@ export default function QBoard() {
     }, [onGoing]);
 
     const testStart = useCallback(() => {
+        setData(startData);
         setOnGoing(true);
         document.getElementById("mainInput")?.focus();
-    }, []);
-
-   
+    }, [startData]);
 
     return (
-        <div autoFocus={true} onKeyDown={shortCuts} className="w-full h-full flex flex-col items-center justify-around">
-            <ControlPanel exchange={exchange} hidden={onGoing}/>
-            <QDisplay params={params} onGoing={onGoing} report={report} functions={[testStart, shortCuts]}/>
+        <div autoFocus={true} onKeyDown={shortCuts} className={`w-full h-full flex flex-col items-center justify-around`}>
+            {onGoing ? <Stats params={params} data={data} report={report}/> : <ControlPanel update={update}/>}
+            <QDisplay params={params} onGoing={onGoing} update={update} functions={[testStart, shortCuts]}/>
         </div>
     );
 }

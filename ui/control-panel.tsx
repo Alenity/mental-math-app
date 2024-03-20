@@ -6,13 +6,13 @@ import { jetbrains } from "@/app/fonts";
 import { Operator, ParamProps, TimeMode } from "@/lib/custom-types";
 import NumInput from "./num-input";
 
-export default function ControlPanel({exchange, hidden}: {exchange: any, hidden: boolean}) {
+export default function ControlPanel({update}: {update: any}) {
     let defaultParams: ParamProps = {operation: Operator.All, digit_count: 1, time_mode: TimeMode.Timed, time_mode_val: 30};
     const [params, setParams] = useState<ParamProps>(defaultParams);
     
     useEffect(() => {
-        exchange(params);
-    }, [params, exchange])
+        update({params: params});
+    }, [params, update])
 
     const step = (up: boolean, id: string) => {
         let input: HTMLInputElement = document.getElementById(id) as HTMLInputElement;
@@ -53,8 +53,8 @@ export default function ControlPanel({exchange, hidden}: {exchange: any, hidden:
 
 
     return (
-        <div className={`sm:w-full md:w-full lg:w-2/3 bg-secondary-bg-color p-3 flex justify-evenly border-2 rounded-lg border-secondary-bg-color ${hidden ? "hidden" : ""}`}>
-            <div className="flex justify-around w-full flex-3">
+        <div className={`sm:w-full md:w-full lg:w-2/3 bg-secondary-bg-color p-3 flex justify-evenly border-2 rounded-lg border-secondary-bg-color`}>
+            <div className="flex space-x-3 justify-around w-full flex-3 ">
                 <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     all <input type="radio" onChange={e => convert(e)} value={Operator.All} defaultChecked={true} name="ops" id="ops1" className="hidden"></input>
                 </label>
@@ -76,7 +76,7 @@ export default function ControlPanel({exchange, hidden}: {exchange: any, hidden:
                 <input type="number" id="digitCount" size={4} min={1} max={10} readOnly value={params.digit_count} step={1} className="text-center bg-transparent text-hover-color focus:outline-none"></input>
             </NumInput>
             <Divider props={false}/>
-            <div className="flex justify-around w-full flex-3">
+            <div className="flex justify-around space-x-3 w-full flex-3">
                 <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     inf <input type="radio" onChange={e => convert(e)} value={TimeMode.Inf} name="timeMode" id="timeMode1" className="hidden"></input>
                 </label>

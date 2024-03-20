@@ -3,55 +3,47 @@
 import { DataProps, ParamProps} from "@/lib/custom-types";
 import { QGen } from "@/lib/question-gen";
 import React, {useEffect, useState, useMemo} from 'react';
-import { Stopwatch, Timer }from "./timers";
-import Streak from "./streak";
-import QCount from "./q-count";
 
 
-export default function QDisplay({params, onGoing, report, functions} : {params: ParamProps, onGoing: boolean, report: any, functions: any[]}) {
+
+export default function QDisplay({params, onGoing, update, functions} : {params: ParamProps, onGoing: boolean, update: any, functions: any[]}) {
+
     const startData : DataProps = useMemo(() => ({totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], streak: 0}), [params?.time_mode_val]);
     const [input, setInput] = useState('');
-    const [question, setQuestion] = useState<string|number>();
     const [answer, setAnswer] = useState<string|number>();
+    const [question, setQuestion] = useState<string|number>();
     const [data, setData] = useState<DataProps>(startData);
+    const [correct, setCorrect] = useState<boolean>(false);
 
-    useEffect(() => {
+    const refresh = React.useCallback(() => {
         const [x, y] = QGen({params: params});
         setQuestion(x);
         setAnswer(y);
-        setData(prevData => ({...prevData, questionHistory: [...prevData.questionHistory, String(x)]}));
-    }, [params, data.streak, onGoing]);
+        setData(data => ({...data, questionHistory: [...data.questionHistory, String(x)]}));
+    }, [params]);
 
-    const submit = React.useCallback((e?: any) => {
+    const submit = React.useCallback(() => {
         if (parseFloat(input) === answer) {
-            setData(data => ({...data, questionsCorrect: data.questionsCorrect++, streak: data.streak++}));
+            setCorrect(true);
+            update({correct: correct});
             setInput("");
+            refresh();
         } else {
-            setData(data => ({...data, streak: 0}));
+            setCorrect(false)
+            update({correct: correct});
             setInput("");
+            refresh();
         }
-    }, [answer, input]);
+    }, [answer, input, refresh, update, correct]);
 
-    const timeElement = React.useCallback(() => {
-        if(params.time_mode === "timed") {
-            return <Timer time={params.time_mode_val} ping={() => {report(); setData(startData)}}/>
-        } else if (params.time_mode === "race") {
-            return <Stopwatch/>
-        } else {
-            return null;
-        }
-    }, [params, startData, report]);
+    useEffect(() => {
+        refresh();
+        setInput("");
+    }, [refresh]);
     
     return (
         <div onClick={functions[0]} onKeyDown={functions[1]} className="sm:w-full w-2/3 h-2/3 flex flex-col items-center justify-around relative">
             <div className={`w-full h-full flex flex-col justify-around items-center ${onGoing ? "":"blur-md"}`}>  
-                {onGoing ? 
-                    <div className="flex w-full justify-between flex-1 ">
-                        {timeElement()}
-                        <Streak count={data.streak}/>
-                        <QCount count={data.questionsCorrect} ping={() => {report(); setData(startData)}} total={params.time_mode === "race" ? params.time_mode_val : undefined}/>
-                    </div> :
-                null}  
                 <div className="flex items-center justify-center flex-1">
                 <p className={`text-8xl text-justify text-hover-color`}>{question}</p>
                 </div>

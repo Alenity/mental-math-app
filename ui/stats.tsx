@@ -1,6 +1,28 @@
 'use client';
-import { jetbrains } from "@/app/fonts";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import Streak from "./streak";
+import QCount from "./q-count";
+import { DataProps, ParamProps } from "@/lib/custom-types";
+
+export default function Stats({params, data, report} : {params: ParamProps, data: DataProps, report: any}) {
+    const timeElement = React.useCallback(() => {
+        if(params?.time_mode === "timed") {
+            return <Timer time={params.time_mode_val} ping={report}/>
+        } else if (params?.time_mode === "race") {
+            return <Stopwatch/>
+        } else {
+            return null;
+        }
+    }, [params, report]);
+    
+    return (
+        <div className={`flex w-full justify-between flex-1`}>
+            {timeElement()}
+            <Streak streak={data?.streak}/>
+            {params?.time_mode === "race" ? <QCount count={data?.questionsCorrect} ping={report} total={params?.time_mode_val}/> : null}
+        </div>
+    )
+}
 
 export function Timer({time, ping} : {time : number, ping : any}) {
     const [h, setH] = useState(Math.round(time/3600));
@@ -31,7 +53,7 @@ export function Timer({time, ping} : {time : number, ping : any}) {
 
     return (
         <div className="p-3 flex flex-1 justify-around items-center">
-            <p className={`${jetbrains.className} text-text-color text-4xl`}>{h.toString().length === 1 ? "0" + h : h}:{m.toString().length === 1 ? "0" + m: m}:{s.toString().length === 1 ? "0" + s: s}</p>
+            <p className={` text-text-color text-4xl`}>{h.toString().length === 1 ? "0" + h : h}:{m.toString().length === 1 ? "0" + m: m}:{s.toString().length === 1 ? "0" + s: s}</p>
         </div>
     );
 }
@@ -65,7 +87,7 @@ export function Stopwatch() {
 
     return (
         <div className="p-3 flex flex-1 justify-around items-center">
-            <p className={`${jetbrains.className} text-text-color text-4xl`}>{h.toString().length === 1 ? "0" + h : h}:{m.toString().length === 1 ? "0" + m: m}:{s.toString().length === 1 ? "0" + s: s}:{cs.toString().length === 1 ? "0" + cs: cs}</p>
+            <p className={` text-text-color text-4xl`}>{h.toString().length === 1 ? "0" + h : h}:{m.toString().length === 1 ? "0" + m: m}:{s.toString().length === 1 ? "0" + s: s}:{cs.toString().length === 1 ? "0" + cs: cs}</p>
         </div>
     )
 }

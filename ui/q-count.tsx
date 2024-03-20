@@ -10,7 +10,7 @@ export default function QCount({count, total, ping} : {count: number, total?:num
     }, [count, total, ping])
     return (
         <div className="flex flex-1 p-3 justify-around items-center">
-            <p className={`${jetbrains.className} text-text-color text-4xl`}>{count}{total ? "/" + total: ""}</p>
+            <p className={` text-text-color text-4xl`}>{count}{total ? "/" + total: ""}</p>
         </div>
     )
 }
