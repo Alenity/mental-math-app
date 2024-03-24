@@ -1,6 +1,5 @@
 'use client';
-import { jetbrains } from "@/app/fonts";
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 
 export default function QCount({count, total, ping} : {count: number, total?:number, ping: any}) {
     useEffect(() => {

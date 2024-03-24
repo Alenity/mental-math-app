@@ -5,6 +5,12 @@ export type ParamProps = {
     time_mode_val: number;
 }
 
+export enum AppState {
+    Prep = "prep",
+    OnGoing = "ongoing",
+    Done = "done",
+}
+
 export type OperationLog = {
     addition: number[];
     subtraction: number[];

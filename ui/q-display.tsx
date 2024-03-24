@@ -1,19 +1,18 @@
 'use client';
 
-import { DataProps, ParamProps} from "@/lib/custom-types";
+import { AppState, DataProps, ParamProps} from "@/lib/custom-types";
 import { QGen } from "@/lib/question-gen";
 import React, {useEffect, useState, useMemo} from 'react';
 
 
 
-export default function QDisplay({params, onGoing, update, functions} : {params: ParamProps, onGoing: boolean, update: any, functions: any[]}) {
+export default function QDisplay({params, appState, update, functions} : {params: ParamProps, appState: AppState, update: any, functions: any[]}) {
 
     const startData : DataProps = useMemo(() => ({totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], streak: 0}), [params?.time_mode_val]);
     const [input, setInput] = useState('');
     const [answer, setAnswer] = useState<string|number>();
     const [question, setQuestion] = useState<string|number>();
     const [data, setData] = useState<DataProps>(startData);
-    const [correct, setCorrect] = useState<boolean>(false);
 
     const refresh = React.useCallback(() => {
         const [x, y] = QGen({params: params});
@@ -24,17 +23,15 @@ export default function QDisplay({params, onGoing, update, functions} : {params:
 
     const submit = React.useCallback(() => {
         if (parseFloat(input) === answer) {
-            setCorrect(true);
-            update({correct: correct});
+            update({correct: true});
             setInput("");
             refresh();
         } else {
-            setCorrect(false)
-            update({correct: correct});
+            update({correct: false});
             setInput("");
             refresh();
         }
-    }, [answer, input, refresh, update, correct]);
+    }, [answer, input, refresh, update]);
 
     useEffect(() => {
         refresh();
@@ -43,7 +40,7 @@ export default function QDisplay({params, onGoing, update, functions} : {params:
     
     return (
         <div onClick={functions[0]} onKeyDown={functions[1]} className="sm:w-full w-2/3 h-2/3 flex flex-col items-center justify-around relative">
-            <div className={`w-full h-full flex flex-col justify-around items-center ${onGoing ? "":"blur-md"}`}>  
+            <div className={`w-full h-full flex flex-col justify-around items-center ${appState === AppState.Prep ? "blur-md": ""}`}>  
                 <div className="flex items-center justify-center flex-1">
                 <p className={`text-8xl text-justify text-hover-color`}>{question}</p>
                 </div>
@@ -53,7 +50,7 @@ export default function QDisplay({params, onGoing, update, functions} : {params:
                     </div>
                 </div> 
             </div>
-            <div className={`w-full h-full flex flex-col items-center justify-evenly absolute ${onGoing ? "hidden": ""}`}>
+            <div className={`w-full h-full flex flex-col items-center justify-evenly absolute ${appState === AppState.OnGoing ? "hidden": ""}`}>
                 <p className={`sm:text-5xl text-6xl text-text-color`}>Tap to Start</p>
                 <p className={`text-xl text-text-color`}>Press <kbd className="bg-text-color rounded-sm text-main-bg-color px-2 py-1">Esc</kbd> to quit</p>
             </div>

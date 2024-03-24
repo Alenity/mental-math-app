@@ -1,25 +1,27 @@
 'use client';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Streak from "./streak";
 import QCount from "./q-count";
 import { DataProps, ParamProps } from "@/lib/custom-types";
 
-export default function Stats({params, data, report} : {params: ParamProps, data: DataProps, report: any}) {
+export default function Stats({params, data, ping} : {params: ParamProps, data: DataProps, ping: any}) {
+    
     const timeElement = React.useCallback(() => {
         if(params?.time_mode === "timed") {
-            return <Timer time={params.time_mode_val} ping={report}/>
+            return <Timer time={params.time_mode_val} ping={ping}/>
         } else if (params?.time_mode === "race") {
             return <Stopwatch/>
         } else {
             return null;
         }
-    }, [params, report]);
+    }, [params, ping]);
     
+
     return (
         <div className={`flex w-full justify-between flex-1`}>
             {timeElement()}
             <Streak streak={data?.streak}/>
-            {params?.time_mode === "race" ? <QCount count={data?.questionsCorrect} ping={report} total={params?.time_mode_val}/> : null}
+            {params?.time_mode === "race" ? <QCount count={data?.questionsCorrect} ping={ping} total={params?.time_mode_val}/> : null}
         </div>
     )
 }
