@@ -12,14 +12,13 @@ export default function QDisplay({params, appState, update, functions} : {params
     const [input, setInput] = useState('');
     const [answer, setAnswer] = useState<string|number>();
     const [question, setQuestion] = useState<string|number>();
-    const [data, setData] = useState<DataProps>(startData);
 
     const refresh = React.useCallback(() => {
         const [x, y] = QGen({params: params});
         setQuestion(x);
         setAnswer(y);
-        setData(data => ({...data, questionHistory: [...data.questionHistory, String(x)]}));
-    }, [params]);
+        update({question: String(x)})
+    }, [params, update]);
 
     const submit = React.useCallback(() => {
         if (parseFloat(input) === answer) {

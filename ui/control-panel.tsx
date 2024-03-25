@@ -71,11 +71,11 @@ export default function ControlPanel({update}: {update: any}) {
                     / <input type="radio" onChange={e => convert(e)} value={Operator.Divide} name="ops" id="ops4" className="hidden"></input>
                 </label>
             </div>
-            <Divider props={false}/>
+            <Divider horizontal={false}/>
             <NumInput label="Digit(s)" callBack={step} childID="digitCount">
                 <input type="number" id="digitCount" size={4} min={1} max={10} readOnly value={params.digit_count} step={1} className="text-center bg-transparent text-hover-color focus:outline-none"></input>
             </NumInput>
-            <Divider props={false}/>
+            <Divider horizontal={false}/>
             <div className="flex justify-around space-x-3 w-full flex-3">
                 <label className={`flex-1 text-center text-hover-color has-[:checked]:text-accent-color`}>
                     inf <input type="radio" onChange={e => convert(e)} value={TimeMode.Inf} name="timeMode" id="timeMode1" className="hidden"></input>
@@ -87,7 +87,7 @@ export default function ControlPanel({update}: {update: any}) {
                     race <input type="radio" onChange={e => convert(e)} value={TimeMode.Race} name="timeMode" id="timeMode3" className="hidden"></input>
                 </label>
             </div>
-            <Divider props={false}/>
+            <Divider horizontal={false}/>
             <NumInput label={params.time_mode === TimeMode.Timed ? "Sec(s)" : "Question(s)"} callBack={step} childID="timeModeVal">
                 <input type="number" id="timeModeVal" size={4} disabled={params.time_mode === TimeMode.Inf ? true : false} min={0} step={params.time_mode === TimeMode.Race ? 1 : 5 } value={params.time_mode_val} onChange={e => setParams({...params, time_mode_val: parseInt(e.target.value)})} className="bg-transparent focus:outline-none text-hover-color disabled:text-text-color text-center"></input> 
             </NumInput>
