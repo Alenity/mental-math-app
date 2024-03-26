@@ -1,5 +1,5 @@
 'use client';
-import QDisplay from "./q-display";
+import QFunction from "./q-function";
 import { DataProps, ParamProps, AppState } from "@/lib/custom-types";
 import { useState, useCallback, useMemo } from "react";
 import ControlPanel from "./control-panel";
@@ -8,16 +8,18 @@ import ResultPage from "./result-page";
 
 export default function QBoard() {
     const [params, setParams] = useState<ParamProps>(null!);
-    const startData : DataProps = useMemo(() => ({totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], streak: 0}), [params?.time_mode_val]);
+    const startData : DataProps = useMemo(() => ({totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], answerHistory: [], streak: 0}), [params?.time_mode_val]);
     const [data, setData] = useState<DataProps>(startData);
     const [appState, setAppState] = useState<AppState>(AppState.Prep);    
 
-    const update = useCallback(({params, correct, question} : {params?: ParamProps, correct?: boolean, question?: string}) => {
+    const update = useCallback(({params, correct, question, answer, tPQ} : {params?: ParamProps, correct?: boolean, question?: string, answer?: number, tPQ?: number}) => {
         params !== undefined ? setParams(params) : null;
         if (correct !== undefined) {
             correct ? setData(data => ({...data, questionsCorrect: ++data.questionsCorrect, streak: ++data.streak})) : setData(data => ({...data, streak: 0}));
         }
         question !== undefined ? setData(data => ({...data, questionHistory: [...data.questionHistory, question]})) : null;
+        answer !== undefined ? setData(data => ({...data, answerHistory: [...data.answerHistory, answer]})) : null;
+        tPQ !== undefined ? setData(data => ({...data, timePerQuestion: [...data.timePerQuestion, tPQ]})) : null;
     }, []);
 
     const report = useCallback(() => {
@@ -47,7 +49,7 @@ export default function QBoard() {
             ) : (
                 <div autoFocus={true} onKeyDown={shortCuts} className={`w-full h-full flex flex-col items-center justify-around`}>
                     {appState === AppState.Prep ? <ControlPanel update={update} /> : <Stats params={params} data={data} ping={report}/>}
-                    <QDisplay params={params} appState={appState} update={update} functions={[testStart, shortCuts]} />
+                    <QFunction params={params} appState={appState} update={update} functions={[testStart, shortCuts]} />
                 </div>
             )}
         </>

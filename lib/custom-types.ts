@@ -23,6 +23,7 @@ export type DataProps = {
     questionsCorrect: number;
     timePerQuestion: number[];
     questionHistory: string[];
+    answerHistory: number[];
     streak: number;
     perOperation?: OperationLog;
 }
