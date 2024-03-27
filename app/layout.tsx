@@ -32,7 +32,7 @@ export default function RootLayout({
           </div>
           <div className="w-full h-full flex justify-between flex-1">
             <div className="flex items-end">
-              <p className={`text-text-color`}>v1.2.1</p>
+              <p className={`text-text-color`}>v1.3.0</p>
             </div>
             <div className="flex items-end">
               <p className={`text-text-color`}>Social Stuff</p>
