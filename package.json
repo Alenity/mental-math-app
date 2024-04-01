@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@radix-ui/react-toast": "^1.1.5",
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.41.1",
     "@vercel/analytics": "^1.2.2",
     "chart.js": "^4.4.2",
     "class-variance-authority": "^0.7.0",

@@ -1,5 +1,5 @@
 'use client';
-import { jetbrains } from "@/app/fonts";
+import { jetbrains } from "@/lib/fonts";
 import { ReactNode } from "react";
 
 export default function NumInput({children, label, callBack, childID}: {children: ReactNode, label: string, callBack: Function, childID: string}) {

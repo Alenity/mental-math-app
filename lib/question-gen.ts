@@ -7,12 +7,26 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
     y = (Math.floor(Math.random()*Math.pow(10, params?.digit_count)));
     
 
-    function noZero(y: number): number {
-        y = (Math.floor(Math.random()*Math.pow(10, params?.digit_count)));
-        if (y === 0) {
-            y = 1;
-            return y;
-        } else return y;
+    function noZero(): number {
+        y = (Math.ceil(Math.random()*Math.pow(10, params?.digit_count)));
+        return y;
+    }
+
+    function factor(x: number): number {
+        if (x === 0) {
+            return noZero();
+        }
+        let factorCount = 0;
+        let factors = [];
+        for (let i = 1; i <= Math.sqrt(x); i++) {
+            if (x % i === 0) {
+               factorCount += 2;
+               factors.push(i);
+               factors.push((x/i));
+            }
+        }
+        let z = factors[Math.floor(Math.random()*factorCount)]
+        return z;
     }
 
     switch (params?.operation) {
@@ -24,8 +38,8 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
                 case 2:
                     return [(x + " - " + y), (x - y)];
                 case 3:
-                    y = noZero(y);
-                    return [(x + " / " + y), parseFloat((x / y).toPrecision(3))];
+                    y = factor(x);
+                    return [(x + " / " + y), (x / y)];
                 case 4:
                     return [(x + " x " + y), (x * y)];
                 default:
@@ -36,8 +50,8 @@ export function QGen({params} : {params: ParamProps}): (string|number)[] {
         case Operator.Subtract: 
             return [(x + " - " + y), (x - y)];
         case Operator.Divide:
-            y = noZero(y);
-            return [(x + " / " + y), parseFloat((x / y).toPrecision(3))];
+            y = factor(x);
+            return [(x + " / " + y), (x / y)];
         case Operator.Multiply:
             return [(x + " x " + y), (x * y)];
         default: 

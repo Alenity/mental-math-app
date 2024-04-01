@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react"
-import { jetbrains } from "./fonts";
+import { jetbrains } from "../lib/fonts";
 import "./globals.css";
 
 
