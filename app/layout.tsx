@@ -21,7 +21,10 @@ export default function RootLayout({
         <main className="w-screen h-screen bg-main-bg-color flex flex-col p-5">
           <div className="w-full h-full flex justify-between flex-1">
             <div>
-              <p className={`text-hover-color`}>Sail Math</p>
+              <button>
+                <p className={`text-hover-color`}>Sail Math</p>
+              </button>
+              
             </div>
             <div>
               <p className={`text-text-color`}>Account Stuff</p>

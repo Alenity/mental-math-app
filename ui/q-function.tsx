@@ -2,32 +2,29 @@
 
 import { AppState, DataProps, ParamProps} from "@/lib/custom-types";
 import { QGen } from "@/lib/question-gen";
-import React, {useEffect, useState, useMemo} from 'react';
-
+import {useEffect, useState, useCallback} from 'react';
 
 
 export default function QFunction({params, appState, update, functions} : {params: ParamProps, appState: AppState, update: any, functions: any[]}) {
-
-    const startData : DataProps = useMemo(() => ({totalQuestions: params?.time_mode_val, questionsCorrect: 0, timePerQuestion: [], questionHistory: [], answerHistory: [], streak: 0}), [params?.time_mode_val]);
     const [input, setInput] = useState('');
     const [answer, setAnswer] = useState<string|number>();
     const [question, setQuestion] = useState<string|number>();
-    const [tPQ, setTPQ] = useState<number>(0);
+    const [tPQ, setTPQ] = useState<number>(null!);
+    const [pTPQ, setPTPQ] = useState<number>(null!);
     
-    const pulse = (b: boolean) => {
-        let timeNow = new Date().getMilliseconds()
+    const pulse = useCallback((b: boolean) => {
+        let timeNow = new Date().getTime();
         if (b) {
-            let difference = timeNow - tPQ
-            setTPQ(difference); 
-        } else setTPQ(timeNow);
-    }
+           setTPQ(timeNow - pTPQ)
+        } else setPTPQ(timeNow);
+    }, [pTPQ]);
 
-    const refresh = () => {
+    const refresh = useCallback(() => {
         const [x, y] = QGen({params: params});
         setQuestion(x);
         setAnswer(y);
         pulse(false)
-    };
+    }, [pulse, params])
 
     const submit = () => {
         pulse(true)
@@ -43,11 +40,9 @@ export default function QFunction({params, appState, update, functions} : {param
     };
 
     useEffect(() => {
-        const [x, y] = QGen({params: params});
-        setQuestion(x);
-        setAnswer(y);
+        refresh();
         setInput("");
-    }, [params]);
+    }, [refresh])
     
     return (
         <div onClick={functions[0]} onKeyDown={functions[1]} className="sm:w-full w-2/3 h-2/3 flex flex-col items-center justify-around relative">
