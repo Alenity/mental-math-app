@@ -3,7 +3,7 @@ import Card from "@/ui/card";
 import Divider from "./divider";
 import Next from "@/assets/chevron-right.svg";
 import Redo from "@/assets/redo.svg";
-import { Radar, Bar, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, BarElement, LineElement, PointElement, RadialLinearScale, LinearScale, CategoryScale, Tooltip } from "chart.js";
 
 ChartJS.register(BarElement, LineElement, PointElement, RadialLinearScale, LinearScale, CategoryScale, Tooltip);

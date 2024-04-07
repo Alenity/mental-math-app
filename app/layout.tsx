@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import { jetbrains } from "../lib/fonts";
+
 import "./globals.css";
 
 
@@ -18,30 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <Analytics/>
       <body className={`${jetbrains.className}`}>
-        <main className="w-screen h-screen bg-main-bg-color flex flex-col p-5">
-          <div className="w-full h-full flex justify-between flex-1">
-            <div>
-              <button>
-                <p className={`text-hover-color`}>Sail Math</p>
-              </button>
-              
-            </div>
-            <div>
-              <p className={`text-text-color`}>Account Stuff</p>
-            </div>
-          </div>
-          <div className="w-full h-full flex flex-col justify-around items-center flex-2">
-            {children}
-          </div>
-          <div className="w-full h-full flex justify-between flex-1">
-            <div className="flex items-end">
-              <p className={`text-text-color`}>v1.3.0</p>
-            </div>
-            <div className="flex items-end">
-              <p className={`text-text-color`}>Social Stuff</p>
-            </div>
-          </div>
-        </main>
+        {children}
       </body>
     </html>
   );

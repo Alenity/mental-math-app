@@ -19,12 +19,14 @@ export default function QBoard() {
         }
         question !== undefined ? setData(data => ({...data, questionHistory: [...data.questionHistory, question]})) : null;
         answer !== undefined ? setData(data => ({...data, answerHistory: [...data.answerHistory, answer]})) : null;
+        //tPQ means timePerQuestion, I know bad practice and whatnot but I didn't want to get it mixed up with data.timePerQuestion
         tPQ !== undefined ? setData(data => ({...data, timePerQuestion: [...data.timePerQuestion, tPQ]})) : null;
     }, []);
 
     const report = useCallback(() => {
+        console.log(data?.timePerQuestion)
         setAppState(AppState.Done)
-    }, [])
+    }, [data?.timePerQuestion])
 
     const restart = useCallback(() => {
         setAppState(AppState.Prep)
@@ -53,7 +55,7 @@ export default function QBoard() {
             ) : (
                 <div autoFocus={true} onKeyDown={shortCuts} className={`w-full h-full flex flex-col items-center justify-around`}>
                     {appState === AppState.Prep ? <ControlPanel update={update} /> : <Stats params={params} data={data} ping={report}/>}
-                    <QFunction params={params} appState={appState} update={update} functions={[testStart, shortCuts]} />
+                    <QFunction params={params} appState={appState} update={update} start={testStart} shortcuts={shortCuts} />
                 </div>
             )}
         </>
