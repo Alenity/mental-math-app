@@ -1,4 +1,4 @@
-import { DataProps } from "@/lib/custom-types";
+import { DataProps, StartType } from "@/lib/custom-types";
 import Card from "@/ui/card";
 import Divider from "./divider";
 import Next from "@/assets/chevron-right.svg";
@@ -65,10 +65,10 @@ export default function ResultPage({data, restart} : {data: DataProps, restart: 
       </div>
       <div className="col-start-2 row-start-3 col-span-3 row-span-1">
         <Card classNames="flex justify-around items-center">
-          <button className="fill-hover-color" onClick={() => restart(true)}>
+          <button className="fill-hover-color" onClick={() => restart(StartType.Restart)}>
             <Next/>
           </button>
-          <button className="stroke-hover-color" onClick={() => null}>
+          <button className="stroke-hover-color" onClick={() => restart(StartType.Redo)}>
           <Redo/>
           </button>
         </Card>

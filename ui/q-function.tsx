@@ -1,6 +1,6 @@
 'use client';
 
-import { AppState, DataProps, ParamProps} from "@/lib/custom-types";
+import { AppState, ParamProps, StartType} from "@/lib/custom-types";
 import { QGen } from "@/lib/question-gen";
 import {useEffect, useState, useCallback} from 'react';
 
@@ -40,16 +40,14 @@ export default function QFunction({params, appState, update, start, shortcuts} :
     }
 
     const testStart = () => {
-        start(true);
         refresh();
+        start(StartType.Restart);
     }
 
     useEffect(() => {
-        const [x, y] = QGen({params: params});
-        setQuestion(x);
-        setAnswer(y);
+        refresh();
         setInput("");
-    }, [params])
+    }, [])
     
     return (
         <div onKeyDown={shortcuts} className="w-2/3 h-2/3 sm:w-full flex flex-col items-center justify-around relative">

@@ -11,11 +11,23 @@ export enum AppState {
     Done = "done",
 }
 
+export enum UserState {
+    Anon = "anonymous",
+    Auth = "authenticated",
+    Null = "void",
+}
+
 export type OperationLog = {
     addition: number[];
     subtraction: number[];
     multiplication: number[];
     division: number[];
+}
+
+export enum StartType {
+    Restart = "restart",
+    Redo = "redo",
+    New = "new",
 }
 
 export type DataProps = {

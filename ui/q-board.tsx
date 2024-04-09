@@ -1,6 +1,6 @@
 'use client';
 import QFunction from "./q-function";
-import { DataProps, ParamProps, AppState } from "@/lib/custom-types";
+import { DataProps, ParamProps, AppState, StartType } from "@/lib/custom-types";
 import { useState, useCallback, useMemo } from "react";
 import ControlPanel from "./control-panel";
 import Stats from "./stats";
@@ -24,12 +24,7 @@ export default function QBoard() {
     }, []);
 
     const report = useCallback(() => {
-        console.log(data?.timePerQuestion)
         setAppState(AppState.Done)
-    }, [data?.timePerQuestion])
-
-    const restart = useCallback(() => {
-        setAppState(AppState.Prep)
     }, [])
 
     const shortCuts = useCallback((event: any) => {
@@ -42,20 +37,32 @@ export default function QBoard() {
         }
     }, [appState]);
 
-    const testStart = useCallback((restart?: boolean) => {
-        restart !== undefined ? restart ? setAppState(AppState.OnGoing) : setAppState(AppState.Prep) : null;
+    const testStarter = useCallback((startType: StartType, refreshFunc?: () => void) => {
         setData(data => ({...data, streak: 0, totalQuestions: params?.time_mode_val, questionHistory: [], questionsCorrect: 0, timePerQuestion: []}));
+        switch (startType) {
+            case StartType.Restart:
+                setAppState(AppState.OnGoing);
+                break;
+            case StartType.Redo:
+                setAppState(AppState.OnGoing);
+                break;
+            case StartType.New:
+                setAppState(AppState.Prep);
+                break;
+            default:
+                setAppState(AppState.Prep);
+        }
         document.getElementById("mainInput")?.focus();
     }, [params?.time_mode_val]);
 
     return (
         <>
             {appState === AppState.Done ? (
-                <ResultPage data={data} restart={testStart}/>
+                <ResultPage data={data} restart={testStarter}/>
             ) : (
                 <div autoFocus={true} onKeyDown={shortCuts} className={`w-full h-full flex flex-col items-center justify-around`}>
                     {appState === AppState.Prep ? <ControlPanel update={update} /> : <Stats params={params} data={data} ping={report}/>}
-                    <QFunction params={params} appState={appState} update={update} start={testStart} shortcuts={shortCuts} />
+                    <QFunction params={params} appState={appState} update={update} start={testStarter} shortcuts={shortCuts} />
                 </div>
             )}
         </>
